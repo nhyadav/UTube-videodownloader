@@ -1,0 +1,1 @@
+web: gunicorn ydfnvr.wsgi --log-file-

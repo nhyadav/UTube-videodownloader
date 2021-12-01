@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <title>Home</title>
+  </head>
+  <body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Fastdownload</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Help</a>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link">About US</a>
+        </li>
+      </ul>
+      
+    </div>
+  </div>
+</nav>
+    <h1 class='text-center my-5'>Welcome in Fastdownload videos from Youtube.</h1>
+
+    <div class='container my-5'>
+    <form class="d-flex" action='/search' method='POST'>
+    {% csrf_token %}
+        <input class="form-control me-2" type="search"  name='url' placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+
+<!-- greeting-->
+{% if success %}
+<div class='container align-center'>
+<p><h3>{{success}}</h3></p>
+<p><h4>{{greeting}}</h4></p>
+</div>
+{% endif %}
+
+{% if error %}
+<div class='container align-center'>
+<p><h3>{{error}}</h3></p>
+</div>
+{% endif %}
+
+
+
+
+
+    <!--Video/music info-->
+{% if title %}
+<div class="row">
+    <div class="col-md-6 ml-auto mr-auto mt-5">
+        <h1 class="h3 text-center">{{ title }}</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4 ml-auto mr-auto mt-5">
+        <img class="img-responsive" src="{{thumbnail}}">
+    </div>
+
+    {% comment %} <div class="col-md-4 ml-auto mr-auto mt-5 pt-5">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item border-0 pl-2 pr-2 pb-0 text-center" style="background-color: #181818;">
+                <p class="lead">Duration <i class="fa fa-clock-o"></i>: {{ duration }}</p>
+            </li>
+            <li class="list-group-item border-0 pl-2 pr-2 pb-0 text-center" style="background-color: #181818;">
+                <p class="lead">Views <i class="fa fa-eye"></i>: {{ views }}</p>
+            </li>
+            <li class="list-group-item border-0 pl-2 pr-2 pb-0 text-center" style="background-color: #181818;">
+                <p class="lead">Likes <i class="fa fa-thumbs-up"></i>: {{ likes }} Dislikes <i class="fa fa-thumbs-up"></i>: {{ dislikes }}</p>
+            </li>
+        </ul>
+    </div> {% endcomment %}
+</div>
+<!--Video download options-->
+<div class="row">
+    <div class="col-md-12">
+        <p class="h3 text-center mt-5 mb-5">Video</p>
+        <table class="table mt-5">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Resolution</th>
+                    <th scope="col">Download</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for video in videos %}
+                <tr>
+                    <td>{{ video.resolution }}</td>
+                    <td><a href="/download/{{video.id}}" style="text-decoration: none;" target="_blank">Download <i class=" fa fa-download"></i></a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <!--Audio only download options-->
+        <p class="h3 text-center mt-5 mb-5">Audio Only</p>
+        <table class="table mt-5 mb-5">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Resolution</th>
+                    <th scope="col">Download</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for audio in audios %}
+                <tr>
+                    <td>{{ audio.resolution }}</td>
+                    <td><a href="/download/{{audio.id}}" style="text-decoration: none;" target="_blank">Download <i class=" fa fa-download"></i></a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    -->
+    <footer class='fixed-bottom bg-primary'>
+    
+    <p class='text-center'>Author: Narayan hari yadav<br>
+  </footer>
+  </body>
+</html>
